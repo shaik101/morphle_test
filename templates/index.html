@@ -1,0 +1,91 @@
+<html>
+   <head>
+      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <style>
+         body {
+         padding: 80px 0;
+         background: #19beda;
+         }
+         .container .content {
+         max-width: 650px;
+         margin: 0 auto;
+         text-align: center;
+         position: relative;
+         z-index: 2; }
+         .container .content .form-control {
+         height: 50px;
+         border-color: #ffffff;
+         border-radius:0;
+         }
+         .container .content.form-control:focus {
+         box-shadow: none;
+         border: 2px solid #243c4f;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="content">
+                  <div class="input-group">
+                     <input id="foo" type="text" class="form-control" placeholder="Enter your string">
+                  </div>
+                  <br>
+                  <div id="results"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+      <script>
+         $(document).ready(function(){
+         
+             $("#foo").on("change", function() {
+         
+             //console.log(this.value);
+         
+             $.ajax({
+                 url:"perm/",
+                 type:"get",
+                 data:{"q":this.value},
+                 success:function(res){
+                     // console.log(res);
+                     var results = $("#results")
+                     
+                     len = res.length
+         
+                     console.log(len)
+         
+                     if (len<=0){results.text("")}
+                     else{results.html("<h2>Your results : </h2>")}
+         
+                     for(var i=0; i < len; i++){
+         
+                         if (i>50){
+                             results.append( $("<h4>"+i+". "+res[i]+" ....................... "+(len-1)+". "+res[len-1]+"</h4>") );
+                             break;
+                         }
+         
+                         results.append($("<h4>"+i+"." +res[i]+"</h4>"));
+         
+         
+                     }
+         
+                 },
+                 error:function(xhr){
+                     console.log(xhr);
+         
+                 }
+                 
+             });
+         
+         });
+         
+         
+         });
+         
+      </script>
+   </body>
+</html>
